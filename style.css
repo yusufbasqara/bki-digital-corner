@@ -247,3 +247,33 @@ body.light-mode footer{background:#fff;border-top:1px solid #e5e5e5;}
   .grid{grid-template-columns:repeat(2,1fr);}
   .main-nav{padding:16px 20px;}
 }
+
+/* New styles for rules list */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.rule-link {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  color: inherit;
+  text-decoration: none;
+}
+
+body.dark-mode .rule-link {
+  background-color: #2b2b2b;
+  border-color: #444;
+}
+
+.rule-link:hover {
+  background-color: #e0e0e0;
+}
+
+body.dark-mode .rule-link:hover {
+  background-color: #3a3a3a;
+}
