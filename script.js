@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- DATA & RENDERING ---------- */
-  const appLinks = [
+  /* ---------- DATA & RENDERING ---------- */  const appLinks = [
     { name: 'Part 0.General',           url: '#', color: 'blue',   category: 'General'  },
     { name: 'Part 1.Seagoing Ship',     url: '#', color: 'blue',   category: 'General'  },
     { name: 'Part 2.Inland Waterway',   url: '#', color: 'blue',   category: 'General'  },
@@ -18,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     (acc[link.category] = acc[link.category] || []).push(link);
     return acc;
   }, {});
-  Object.keys(grouped).forEach(cat => {
+  if (false) {
+Object.keys(grouped).forEach(cat => {
     const card = document.createElement('div');
     card.className = 'category-card';
     card.innerHTML = `<h2 class="category-title">${cat}</h2>`;
@@ -34,8 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
       `);
     });
     card.appendChild(grid);
-    appContainer.appendChild(card);
-  });
+    }
+
+    //appContainer.appendChild(card);*/
+ }
 
   /* ---------- ELEMENT REFERENCES ---------- */
   const themeToggle            = document.getElementById('themeToggle');

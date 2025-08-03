@@ -277,3 +277,10 @@ body.dark-mode .rule-link {
 body.dark-mode .rule-link:hover {
   background-color: #3a3a3a;
 }
+
+
+/* Hide old grid layout on homepage */
+.grid,
+.category-card {
+  display: none;
+}
