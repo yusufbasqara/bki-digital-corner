@@ -1,21 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- DATA & RENDERING ---------- */
+  // elemen
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu   = document.getElementById('mobile-menu');
+  const expandBtns   = document.querySelectorAll('.expand-btn');
+
+  // toggle mobile menu dropdown
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('active');
+    mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // accordion untuk setiap expand-btn
+  expandBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      const parent  = e.currentTarget.closest('.mobile-nav-item');
+      const submenu = parent.querySelector('.submenu');
+      // toggle
+      const isOpen = submenu.style.display === 'block';
+      submenu.style.display = isOpen ? 'none' : 'block';
+      e.currentTarget.querySelector('span').textContent = isOpen ? '+' : '−';
+    });
+  });
+
+  // tema toggle & modal barcode (sama seperti sebelumnya)…
+  const themeToggle  = document.getElementById('themeToggle');
+  const barcodeBtn   = document.querySelector('.barcode-button');
+  const barcodeModal = document.getElementById('barcode-modal');
+  const closeModalBtn= document.getElementById('close-modal-btn');
+
+  themeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('light-mode');
+  });
+
+  barcodeBtn.addEventListener('click', () => {
+    barcodeModal.classList.add('active');
+  });
+  closeModalBtn.addEventListener('click', () => {
+    barcodeModal.classList.remove('active');
+  });
+  barcodeModal.addEventListener('click', e => {
+    if (e.target === barcodeModal) barcodeModal.classList.remove('active');
+  });
+
+  // rendering app links (sama seperti awal)
   const appLinks = [
-    { name: 'Part 0.General',           url: '#', color: 'blue',   category: 'General'  },
-    { name: 'Part 1.Seagoing Ship',     url: '#', color: 'blue',   category: 'General'  },
-    { name: 'Part 2.Inland Waterway',   url: '#', color: 'blue',   category: 'General'  },
-    { name: 'Part 3.Special Ships',     url: '#', color: 'blue',   category: 'General'  },
-    { name: 'Part 4.Special Equipment', url: '#', color: 'green',  category: 'Seasonal'},
-    { name: 'Part 5.Offshore Tech',     url: '#', color: 'green',  category: 'Seasonal'},
-    { name: 'Part 6.Statutory',         url: '#', color: 'green',  category: 'Seasonal'},
-    { name: 'Part 7.Class Notation',    url: '#', color: 'green',  category: 'Seasonal'},
-    { name: 'Part 8.Domestic Ships',    url: '#', color: 'orange', category: 'Industry'},
-    { name: 'Part 9.Naval Ship Tech',   url: '#', color: 'orange', category: 'Industry'},
-    { name: 'Part 10.Industry',          url: '#', color: 'orange', category: 'Industry'}
+    { name: 'General',          url: '#', color: 'blue',   category: 'General'  },
+    { name: 'Seagoing Ship',    url: '#', color: 'blue',   category: 'General'  },
+    { name: 'Inland Waterway',  url: '#', color: 'blue',   category: 'General'  },
+    { name: 'Special Ships',    url: '#', color: 'blue',   category: 'General'  },
+    { name: 'Special Equipment',url: '#', color: 'green',  category: 'Seasonal'},
+    { name: 'Offshore Tech',    url: '#', color: 'green',  category: 'Seasonal'},
+    { name: 'Statutory',        url: '#', color: 'green',  category: 'Seasonal'},
+    { name: 'Class Notation',   url: '#', color: 'green',  category: 'Seasonal'},
+    { name: 'Domestic Ships',   url: '#', color: 'orange', category: 'Industry'},
+    { name: 'Naval Ship Tech',  url: '#', color: 'orange', category: 'Industry'},
+    { name: 'Industry',         url: '#', color: 'orange', category: 'Industry'}
   ];
   const appContainer = document.getElementById('app-container');
-  const grouped = appLinks.reduce((acc, link) => {
-    (acc[link.category] = acc[link.category] || []).push(link);
+  const grouped = appLinks.reduce((acc, l) => {
+    (acc[l.category] = acc[l.category]||[]).push(l);
     return acc;
   }, {});
   Object.keys(grouped).forEach(cat => {
@@ -25,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.createElement('div');
     grid.className = 'grid';
     grouped[cat].forEach(link => {
-      const initials = link.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+      const initials = link.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
       grid.insertAdjacentHTML('beforeend', `
         <a href="${link.url}" target="_blank" class="icon-item">
           <div class="icon-bg bg-${link.color}">${initials}</div>
@@ -35,67 +78,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     card.appendChild(grid);
     appContainer.appendChild(card);
-  });
-
-  /* ---------- ELEMENT REFERENCES ---------- */
-  const themeToggle            = document.getElementById('themeToggle');
-  const hamburgerBtn           = document.getElementById('hamburger-btn');
-  const mobileMenu             = document.getElementById('mobile-menu');
-  const navOverlay             = document.getElementById('nav-overlay');
-  const mobileResourcesBtn     = document.getElementById('mobile-resources-btn');
-  const mobileResourcesContent = document.getElementById('mobile-resources-content');
-  const barcodeBtn             = document.querySelector('.barcode-button');
-  const barcodeModal           = document.getElementById('barcode-modal');
-  const closeModalBtn          = document.getElementById('close-modal-btn');
-
-  let scrollPosition = 0;
-
-  /* ---------- THEME TOGGLE ---------- */
-  themeToggle.addEventListener('change', () => {
-    document.body.classList.toggle('light-mode');
-  });
-
-  /* ---------- MOBILE MENU LOGIC ---------- */
-  function openMobileMenu() {
-    scrollPosition = window.pageYOffset;
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.classList.add('no-scroll');
-    hamburgerBtn.classList.add('active');
-    mobileMenu.classList.add('active');
-    navOverlay.classList.add('active');
-  }
-
-  function closeMobileMenu() {
-    document.body.classList.remove('no-scroll');
-    document.body.style.removeProperty('top');
-    window.scrollTo(0, scrollPosition);
-    hamburgerBtn.classList.remove('active');
-    mobileMenu.classList.remove('active');
-    navOverlay.classList.remove('active');
-    mobileResourcesContent.style.display = 'none';
-  }
-
-  // Toggle menu open/close
-  hamburgerBtn.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.contains('active');
-    isOpen ? closeMobileMenu() : openMobileMenu();
-  });
-
-  // Klik overlay untuk menutup menu
-  navOverlay.addEventListener('click', closeMobileMenu);
-
-  // Toggle submenu RESOURCES
-  mobileResourcesBtn.addEventListener('click', e => {
-    e.preventDefault();
-    const isSubOpen = mobileResourcesContent.style.display === 'flex';
-    mobileResourcesContent.style.display = isSubOpen ? 'none' : 'flex';
-  });
-
-  /* ---------- BARCODE MODAL ---------- */
-  const closeModal = () => barcodeModal.classList.remove('active');
-  barcodeBtn.addEventListener('click', () => barcodeModal.classList.add('active'));
-  closeModalBtn.addEventListener('click', closeModal);
-  barcodeModal.addEventListener('click', e => {
-    if (e.target === barcodeModal) closeModal();
   });
 });
