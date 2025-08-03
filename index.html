@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Digital Corner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+  <nav class="main-nav">
+
+     <div class="nav-overlay" id="nav-overlay"></div>
+
+    <div class="nav-content">
+      <a href="#" class="logo-link logo-bki-container">
+        <img src="assets/bki_logo.png" alt="Logo BKI" class="logo-bki">
+      </a>
+
+      <!-- FLEX‑GROW CENTER CONTAINER -->
+      <div class="menu-container">
+        <div class="menu-desktop">
+          <a href="#" class="nav-item active">DASHBOARD</a>
+          <div class="nav-item dropdown">
+            <button class="dropdown-btn">
+              RESOURCES <span class="arrow">&#9662;</span>
+            </button>
+            <div class="dropdown-content">
+              <a href="https://iacs.org.uk" target="_blank">IACS</a>
+              <a href="https://www.tokyo-mou.org/" target="_blank">Tokyo MOU</a>
+              <a href="https://www.imo.org/" target="_blank">IMO</a>
+              <a href="https://www.bki.co.id/publikasi.html" target="_blank">BKI Publication</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="logo-link logo-bumn-container">
+        <img src="assets/bumn_logo.png" alt="Logo BUMN" class="logo-bumn">
+      </a>
+      <button class="hamburger-menu" id="hamburger-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav-menu" id="mobile-menu">
+    <a href="#" class="mobile-nav-item">DASHBOARD</a>
+    <div class="mobile-nav-item mobile-dropdown">
+      <button class="mobile-dropdown-btn" id="mobile-resources-btn">
+        RESOURCES <span class="arrow">&#9662;</span>
+      </button>
+      <div class="mobile-dropdown-content" id="mobile-resources-content">
+        <a href="https://iacs.org.uk" target="_blank">IACS</a>
+        <a href="https://www.tokyo-mou.org/" target="_blank">Tokyo MOU</a>
+        <a href="https://www.imo.org/" target="_blank">IMO</a>
+        <a href="https://www.bki.co.id/publikasi.html" target="_blank">BKI Publication</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>Digital Corner</h1>
+      <label class="toggle-switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+    </header>
+    <main id="app-container"></main>
+  </div>
+
+  <footer>
+    <button class="barcode-button">Scan Barcode</button>
+  </footer>
+
+  <!-- BARCODE MODAL -->
+  <div class="modal-overlay" id="barcode-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="close-modal-btn">&times;</button>
+      <h2>Scan QR Code</h2>
+      <img src="https://placehold.co/300x300/ffffff/000000?text=Your+QR+Code"
+           alt="QR Code" class="qr-code-img">
+      <p>Arahkan kamera Anda ke QR Code untuk melanjutkan.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
