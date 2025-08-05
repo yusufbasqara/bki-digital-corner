@@ -3,8 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- ANTI-CACHE META TAGS - Mencegah browser caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
   <title>POJOK BKI 4.0</title>
-  <link rel="stylesheet" href="style.css">
+  
+  <!-- CSS dengan timestamp anti-cache -->
+  <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>" id="main-css">
+  
+  <!-- Fallback jika PHP tidak tersedia, gunakan timestamp manual -->
+  <script>
+    // Dynamic CSS loading dengan timestamp
+    if (!document.getElementById('main-css').href.includes('?v=')) {
+      const timestamp = new Date().getTime();
+      document.getElementById('main-css').href = `style.css?v=${timestamp}`;
+    }
+  </script>
 </head>
 <body class="light-mode">
   <nav class="main-nav">
@@ -12,7 +29,7 @@
 
     <div class="nav-content">
       <a href="#" class="logo-link logo-bki-container">
-        <img src="assets/bki_logo.png" alt="Logo BKI" class="logo-bki">
+        <img src="assets/bki_logo.png?v=<?php echo time(); ?>" alt="Logo BKI" class="logo-bki">
       </a>
 
       <!-- FLEX‑GROW CENTER CONTAINER -->
@@ -34,7 +51,7 @@
       </div>
 
       <a href="#" class="logo-link logo-bumn-container">
-        <img src="assets/bumn_logo.png" alt="Logo BUMN" class="logo-bumn">
+        <img src="assets/bumn_logo.png?v=<?php echo time(); ?>" alt="Logo BUMN" class="logo-bumn">
       </a>
       <button class="hamburger-menu" id="hamburger-btn">
         <span></span><span></span><span></span>
@@ -75,6 +92,43 @@
     <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://bki.co.id" alt="QR Code" id="barcode-image">
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript dengan dynamic loading dan anti-cache -->
+  <script>
+    // Function untuk load script dengan timestamp
+    function loadScriptWithTimestamp(src, callback) {
+      const timestamp = new Date().getTime();
+      const script = document.createElement('script');
+      script.src = `${src}?v=${timestamp}`;
+      script.onload = callback || function() {};
+      script.onerror = function() {
+        console.error('Failed to load script:', src);
+      };
+      document.head.appendChild(script);
+    }
+
+    // Load script.js dengan anti-cache
+    loadScriptWithTimestamp('script.js', function() {
+      console.log('Script loaded successfully with timestamp');
+    });
+
+    // Force reload function untuk debugging
+    window.forceReload = function() {
+      // Clear semua cache
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          names.forEach(function(name) {
+            caches.delete(name);
+          });
+        });
+      }
+      // Reload dengan parameter random
+      window.location.href = window.location.href + '?t=' + new Date().getTime();
+    };
+  </script>
+
+  <!-- Fallback loading jika script gagal -->
+  <noscript>
+    <script src="script.js"></script>
+  </noscript>
 </body>
 </html>
