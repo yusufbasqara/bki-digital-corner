@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Digital Corner</title>
+  <title>POJOK BKI 4.0</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-mode">
+<body class="light-mode">
   <nav class="main-nav">
-
-     <div class="nav-overlay" id="nav-overlay"></div>
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <div class="nav-content">
       <a href="#" class="logo-link logo-bki-container">
@@ -19,7 +18,7 @@
       <!-- FLEX‑GROW CENTER CONTAINER -->
       <div class="menu-container">
         <div class="menu-desktop">
-          <a href="#" class="nav-item active">DASHBOARD</a>
+          <a href="#" class="nav-item active" onclick="showHomePage()">DASHBOARD</a>
           <div class="nav-item dropdown">
             <button class="dropdown-btn">
               RESOURCES <span class="arrow">&#9662;</span>
@@ -45,7 +44,7 @@
 
   <!-- MOBILE NAV -->
   <div class="mobile-nav-menu" id="mobile-menu">
-    <a href="#" class="mobile-nav-item">DASHBOARD</a>
+    <a href="#" class="mobile-nav-item" onclick="showHomePage()">DASHBOARD</a>
     <div class="mobile-nav-item mobile-dropdown">
       <button class="mobile-dropdown-btn" id="mobile-resources-btn">
         RESOURCES <span class="arrow">&#9662;</span>
@@ -61,7 +60,7 @@
 
   <div class="container">
     <header>
-      <h1>Digital Corner</h1>
+      <h1>POJOK BKI 4.0</h1>
       <label class="toggle-switch">
         <input type="checkbox" id="themeToggle">
         <span class="slider"></span>
@@ -70,19 +69,10 @@
     <main id="app-container"></main>
   </div>
 
-  <footer>
-    <button class="barcode-button">Scan Barcode</button>
-  </footer>
-
-  <!-- BARCODE MODAL -->
-  <div class="modal-overlay" id="barcode-modal">
-    <div class="modal-content">
-      <button class="modal-close-btn" id="close-modal-btn">&times;</button>
-      <h2>Scan QR Code</h2>
-      <img src="https://placehold.co/300x300/ffffff/000000?text=Your+QR+Code"
-           alt="QR Code" class="qr-code-img">
-      <p>Arahkan kamera Anda ke QR Code untuk melanjutkan.</p>
-    </div>
+  <!-- Floating Barcode -->
+  <div id="floating-barcode">
+    <p>Scan Me!</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://bki.co.id" alt="QR Code" id="barcode-image">
   </div>
 
   <script src="script.js"></script>

@@ -1,226 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // App links configuration
-  const appLinks = [
-    { name: 'Part 0. General',           color: 'blue',   category: 'General'  },
-    { name: 'Part 1. Seagoing Ship',     color: 'blue',   category: 'General'  },
-    { name: 'Part 2. Inland Waterway',   color: 'blue',   category: 'General'  },
-    { name: 'Part 3. Special Ships',     color: 'blue',   category: 'General'  },
-    { name: 'Part 4. Special Equipment', color: 'green',  category: 'Seasonal'},
-    { name: 'Part 5. Offshore Tech',     color: 'green',  category: 'Seasonal'},
-    { name: 'Part 6. Statutory',         color: 'green',  category: 'Seasonal'},
-    { name: 'Part 7. Class Notation',    color: 'green',  category: 'Seasonal'},
-    { name: 'Part 8. Domestic Ships',    color: 'orange', category: 'Industry'},
-    { name: 'Part 9. Naval Ship Tech',   color: 'orange', category: 'Industry'},
-    { name: 'Part 10. Industry',         color: 'orange', category: 'Industry'}
-  ];
-
-  // Element references
-  const appContainer = document.getElementById('app-container');
-  const themeToggle = document.getElementById('themeToggle');
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const navOverlay = document.getElementById('nav-overlay');
-  const mobileResourcesBtn = document.getElementById('mobile-resources-btn');
-  const mobileResourcesContent = document.getElementById('mobile-resources-content');
-
-  let scrollPosition = 0;
-
-  // Function to show home page
-  window.showHomePage = function() {
-    console.log('Showing home page...'); // Debug log
-    
-    const grouped = appLinks.reduce((acc, link) => {
-      (acc[link.category] = acc[link.category] || []).push(link);
-      return acc;
-    }, {});
-
-    console.log('Grouped data:', grouped); // Debug log
-
-    // Clear container
-    appContainer.innerHTML = '';
-
-    // Create category cards
-    Object.keys(grouped).forEach(cat => {
-      console.log('Creating category:', cat); // Debug log
-      
-      const card = document.createElement('div');
-      card.className = 'category-card';
-      
-      const title = document.createElement('h2');
-      title.className = 'category-title';
-      title.textContent = cat;
-      card.appendChild(title);
-      
-      const grid = document.createElement('div');
-      grid.className = 'grid';
-      
-      grouped[cat].forEach(link => {
-        console.log('Creating icon for:', link.name); // Debug log
-        
-        const initials = link.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-        
-        const iconItem = document.createElement('div');
-        iconItem.className = 'icon-item';
-        iconItem.onclick = () => showPartDetail(link.name);
-        
-        const iconBg = document.createElement('div');
-        iconBg.className = `icon-bg bg-${link.color}`;
-        iconBg.textContent = initials;
-        
-        const iconName = document.createElement('div');
-        iconName.className = 'icon-name';
-        iconName.textContent = link.name;
-        
-        iconItem.appendChild(iconBg);
-        iconItem.appendChild(iconName);
-        grid.appendChild(iconItem);
-      });
-      
-      card.appendChild(grid);
-      appContainer.appendChild(card);
-    });
-    
-    console.log('Home page created successfully'); // Debug log
-    closeMobileMenu();
-  };
-
-  // Function to show part detail
-  window.showPartDetail = function(partName) {
-    console.log('Showing detail for:', partName); // Debug log
-    
-    const data = partData[partName] || [];
-    
-    appContainer.innerHTML = `
-      <button class="back-button" onclick="showHomePage()">
-        ← Kembali
-      </button>
-      <div class="category-card">
-        <h2 class="category-title">${partName}</h2>
-        <div class="rules-list">
-          ${data.map(item => `
-            <a href="${item.link}" target="_blank" class="rule-link">
-              <div class="rule-title">${item.title}</div>
-              ${item.edition ? `<div class="rule-edition">${item.edition}</div>` : ''}
-            </a>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    closeMobileMenu();
-  };
-
-  // Theme toggle
-  themeToggle.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-  });
-
-  // Mobile menu functions
-  function openMobileMenu() {
-    scrollPosition = window.pageYOffset;
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.classList.add('no-scroll');
-    hamburgerBtn.classList.add('active');
-    mobileMenu.classList.add('active');
-    navOverlay.classList.add('active');
-  }
-
-  function closeMobileMenu() {
-    document.body.classList.remove('no-scroll');
-    document.body.style.removeProperty('top');
-    window.scrollTo(0, scrollPosition);
-    hamburgerBtn.classList.remove('active');
-    mobileMenu.classList.remove('active');
-    navOverlay.classList.remove('active');
-    mobileResourcesContent.style.display = 'none';
-  }
-
-  // Toggle menu open/close
-  hamburgerBtn.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.contains('active');
-    isOpen ? closeMobileMenu() : openMobileMenu();
-  });
-
-  // Click overlay to close menu
-  navOverlay.addEventListener('click', closeMobileMenu);
-
-  // Toggle submenu RESOURCES
-  mobileResourcesBtn.addEventListener('click', e => {
-    e.preventDefault();
-    const isSubOpen = mobileResourcesContent.style.display === 'flex';
-    mobileResourcesContent.style.display = isSubOpen ? 'none' : 'flex';
-  });
-
-  // Initialize homepage
-  console.log('Initializing app...'); // Debug log
-  showHomePage();
-});
-
+// Data configuration for all parts - Updated dengan data lengkap
 const partData = {
   'Part 0. General': [
     {
-      title: 'Vol 1 – Guidelines for Survey and Classification',
-      edition: 'edisi Mar 2020',
-      link: 'assets/docs/part0_volI_guidelines_for_survey_and_classification.pdf'
-    },
-    {
-      title: 'Vol 2 – Guidelines for Dynamic Loading Approach',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_vol2_guidelines_for_dynamic_loading.pdf'
-    },
-    {
-      title: 'Vol 3 – Guidelines for Spectral-Based Fatigue Analysis',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_vol3_guidelines_for_spectral_based_fatigue_analysis.pdf'
-    },
-    {
-      title: 'Vol 4 – Guidelines for Livestock Carriers',
-      edition: 'edisi Des 2015',
-      link: 'assets/docs/part0_vol4_guidelines_for_livestock_carriers.pdf'
-    },
-    {
-      title: 'Vol A – Guidance for Helicopter Deck & Facilities (HELIL/HELIL(SRF))',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_volA_guidance_for_helicopter_deck.pdf'
-    },
-    {
-      title: 'Vol B – Guidance for Crew Habitability On Ship',
-      edition: 'edisi Apr 2025',
-      link: 'assets/docs/part0_volB_guidance_for_crew_habitability_on_ship.pdf'
-    },
-    {
-      title: 'Vol C – Guidance for Crew Habitability on Offshore Installation',
-      edition: 'edisi Mar 2014',
-      link: 'assets/docs/part0_volC_guidance_for_crew_habitability_on_offshore_installation.pdf'
-    },
-    {
-      title: 'Vol D – Guidance for Hull Inspection & Maintenance Program',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_volD_guidance_for_hull_inspection.pdf'
-    },
-    {
-      title: 'Vol E – Guidance for Planned Maintenance Program',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_volE_guidance_for_planned_maintenance_program.pdf'
-    },
-    {
-      title: 'Vol F – Guidance for the Environmental Service Systems (ships/offshore/liftboats)',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_volF_guidance_for_environmental_service_systems.pdf'
-    },
-    {
-      title: 'Vol G – Guidance on Intact Stability',
-      edition: 'edisi Mar 2014',
-      link: 'assets/docs/part0_volG_guidance_on_intact_stability.pdf'
-    },
-    {
-      title: 'Vol H – Guidance for the Class Notation Emergency Response Service',
-      edition: 'edisi Mar 2013',
-      link: 'assets/docs/part0_volH_guidance_for_emergency_response_service.pdf'
-    },
-    {
-      title: 'Vol I – Guidance for Survey Based on Reliability-Centered Maintenance',
-      edition: 'edisi Mar 2012',
-      link: 'assets/docs/part0_volI_guidance_for_survey_reliability.pdf'
+      title: 'Vol B – Guidance for Class Notations',
+      edition: 'edisi Des 2025',
+      link: 'assets/docs/part0_volB_guidance_for_class_notations.pdf'
     }
   ],
   'Part 1. Seagoing Ship': [
@@ -562,5 +346,22 @@ const partData = {
       edition: 'edisi Jan 2020',
       link: 'assets/docs/part10_volA_petunjuk_konstruksi_dan_fasilitas_pelabuhan.pdf'
     }
+  ]
+};
+
+// App configuration
+const appConfig = {
+  links: [
+    { name: 'Part 0. General',           color: 'blue',   category: 'General'  },
+    { name: 'Part 1. Seagoing Ship',     color: 'blue',   category: 'General'  },
+    { name: 'Part 2. Inland Waterway',   color: 'blue',   category: 'General'  },
+    { name: 'Part 3. Special Ships',     color: 'blue',   category: 'General'  },
+    { name: 'Part 4. Special Equipment', color: 'green',  category: 'Seasonal'},
+    { name: 'Part 5. Offshore Tech',     color: 'green',  category: 'Seasonal'},
+    { name: 'Part 6. Statutory',         color: 'green',  category: 'Seasonal'},
+    { name: 'Part 7. Class Notation',    color: 'green',  category: 'Seasonal'},
+    { name: 'Part 8. Domestic Ships',    color: 'orange', category: 'Industry'},
+    { name: 'Part 9. Naval Ship Tech',   color: 'orange', category: 'Industry'},
+    { name: 'Part 10. Industry',         color: 'orange', category: 'Industry'}
   ]
 };
