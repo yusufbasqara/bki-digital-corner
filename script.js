@@ -1,14 +1,16 @@
-// ANTI-CACHE: Generate timestamp untuk mencegah caching
+// ANTI-CACHE: Generate timestamp untuk mencegah caching - DITAMBAHKAN
 const CACHE_BUSTER = new Date().getTime();
+console.log('Anti-cache timestamp initialized:', CACHE_BUSTER);
 
-// Function untuk menambahkan timestamp ke URL
+// Function untuk menambahkan timestamp ke URL - DITAMBAHKAN
 function addCacheBuster(url) {
   if (url === '#') return url;
+  if (url.includes('http')) return url; // Skip external URLs
   const separator = url.includes('?') ? '&' : '?';
   return `${url}${separator}v=${CACHE_BUSTER}`;
 }
 
-// Data struktur lengkap untuk setiap part dengan anti-cache URLs
+// Data struktur lengkap untuk setiap part dengan anti-cache URLs - DIUPDATE
 const partData = {
   'Part 0. General': [
     {
@@ -359,7 +361,7 @@ const partData = {
   ]
 };
 
-// Mapping untuk nama bersih
+// Mapping untuk nama bersih - TIDAK DIUBAH
 const nameMapping = {
   'General': 'Part 0. General',
   'Seagoing Ship': 'Part 1. Seagoing Ship',
@@ -375,10 +377,10 @@ const nameMapping = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Log cache buster untuk debugging
+  // Log cache buster untuk debugging - DITAMBAHKAN
   console.log('Anti-cache timestamp:', CACHE_BUSTER);
   
-  // App links configuration dengan nama bersih
+  // App links configuration dengan nama bersih - TIDAK DIUBAH
   const appLinks = [
     { name: 'General',           color: 'blue',   category: 'General'  },
     { name: 'Seagoing Ship',     color: 'blue',   category: 'General'  },
@@ -393,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Industry',          color: 'orange', category: 'Industry'}
   ];
 
-  // Element references
+  // Element references - TIDAK DIUBAH
   const appContainer = document.getElementById('app-container');
   const themeToggle = document.getElementById('themeToggle');
   const hamburgerBtn = document.getElementById('hamburger-btn');
@@ -404,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let scrollPosition = 0;
 
-  // Function to show home page
+  // Function to show home page - TIDAK DIUBAH
   window.showHomePage = function() {
     console.log('Showing home page...'); // Debug log
     
@@ -463,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeMobileMenu();
   };
 
-  // Function to show part detail dengan mapping dan anti-cache
+  // Function to show part detail dengan mapping dan anti-cache - TIDAK DIUBAH LOGICNYA
   window.showPartDetail = function(partName) {
     console.log('Showing detail for:', partName); // Debug log
     
@@ -490,12 +492,12 @@ document.addEventListener('DOMContentLoaded', () => {
     closeMobileMenu();
   };
 
-  // Theme toggle
+  // Theme toggle - TIDAK DIUBAH
   themeToggle.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
   });
 
-  // Mobile menu functions
+  // Mobile menu functions - TIDAK DIUBAH
   function openMobileMenu() {
     scrollPosition = window.pageYOffset;
     document.body.style.top = `-${scrollPosition}px`;
@@ -515,23 +517,23 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileResourcesContent.style.display = 'none';
   }
 
-  // Toggle menu open/close
+  // Toggle menu open/close - TIDAK DIUBAH
   hamburgerBtn.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.contains('active');
     isOpen ? closeMobileMenu() : openMobileMenu();
   });
 
-  // Click overlay to close menu
+  // Click overlay to close menu - TIDAK DIUBAH
   navOverlay.addEventListener('click', closeMobileMenu);
 
-  // Toggle submenu RESOURCES
+  // Toggle submenu RESOURCES - TIDAK DIUBAH
   mobileResourcesBtn.addEventListener('click', e => {
     e.preventDefault();
     const isSubOpen = mobileResourcesContent.style.display === 'flex';
     mobileResourcesContent.style.display = isSubOpen ? 'none' : 'flex';
   });
 
-  // Initialize homepage
+  // Initialize homepage - TIDAK DIUBAH
   console.log('Initializing app...'); // Debug log
   showHomePage();
 });

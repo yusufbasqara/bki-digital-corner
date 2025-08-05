@@ -4,24 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
-  <!-- ANTI-CACHE META TAGS - Mencegah browser caching -->
+  <!-- ANTI-CACHE META TAGS -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
   <title>POJOK BKI 4.0</title>
-  
-  <!-- CSS dengan timestamp anti-cache -->
-  <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>" id="main-css">
-  
-  <!-- Fallback jika PHP tidak tersedia, gunakan timestamp manual -->
-  <script>
-    // Dynamic CSS loading dengan timestamp
-    if (!document.getElementById('main-css').href.includes('?v=')) {
-      const timestamp = new Date().getTime();
-      document.getElementById('main-css').href = `style.css?v=${timestamp}`;
-    }
-  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="light-mode">
   <nav class="main-nav">
@@ -29,7 +18,7 @@
 
     <div class="nav-content">
       <a href="#" class="logo-link logo-bki-container">
-        <img src="assets/bki_logo.png?v=<?php echo time(); ?>" alt="Logo BKI" class="logo-bki">
+        <img src="assets/bki_logo.png" alt="Logo BKI" class="logo-bki">
       </a>
 
       <!-- FLEX‑GROW CENTER CONTAINER -->
@@ -44,14 +33,13 @@
               <a href="https://iacs.org.uk" target="_blank">IACS</a>
               <a href="https://www.tokyo-mou.org/" target="_blank">Tokyo MOU</a>
               <a href="https://www.imo.org/" target="_blank">IMO</a>
-              <a href="https://www.bki.co.id/publikasi.html" target="_blank">BKI Publication</a>
             </div>
           </div>
         </div>
       </div>
 
       <a href="#" class="logo-link logo-bumn-container">
-        <img src="assets/bumn_logo.png?v=<?php echo time(); ?>" alt="Logo BUMN" class="logo-bumn">
+        <img src="assets/bumn_logo.png" alt="Logo BUMN" class="logo-bumn">
       </a>
       <button class="hamburger-menu" id="hamburger-btn">
         <span></span><span></span><span></span>
@@ -70,7 +58,6 @@
         <a href="https://iacs.org.uk" target="_blank">IACS</a>
         <a href="https://www.tokyo-mou.org/" target="_blank">Tokyo MOU</a>
         <a href="https://www.imo.org/" target="_blank">IMO</a>
-        <a href="https://www.bki.co.id/publikasi.html" target="_blank">BKI Publication</a>
       </div>
     </div>
   </div>
@@ -89,46 +76,36 @@
   <!-- Floating Barcode -->
   <div id="floating-barcode">
     <p>Scan Me!</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://bki.co.id" alt="QR Code" id="barcode-image">
+    <img src="assets/barcode.png" alt="QR Code" id="barcode-image">
   </div>
 
-  <!-- JavaScript dengan dynamic loading dan anti-cache -->
+  <!-- SCRIPT LOADING NORMAL (PALING AMAN) -->
+  <script src="script.js"></script>
+  
+  <!-- Anti-cache via JavaScript setelah DOM loaded -->
   <script>
-    // Function untuk load script dengan timestamp
-    function loadScriptWithTimestamp(src, callback) {
-      const timestamp = new Date().getTime();
-      const script = document.createElement('script');
-      script.src = `${src}?v=${timestamp}`;
-      script.onload = callback || function() {};
-      script.onerror = function() {
-        console.error('Failed to load script:', src);
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🔄 Applying anti-cache measures...');
+      
+      // Add timestamp ke semua link CSS
+      const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+      cssLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.includes('http') && !href.includes('?v=')) {
+          const timestamp = new Date().getTime();
+          link.href = href + '?v=' + timestamp;
+          console.log('CSS anti-cache applied:', href);
+        }
+      });
+      
+      // Force reload function untuk development
+      window.forceReload = function() {
+        const timestamp = new Date().getTime();
+        window.location.href = window.location.pathname + '?t=' + timestamp;
       };
-      document.head.appendChild(script);
-    }
-
-    // Load script.js dengan anti-cache
-    loadScriptWithTimestamp('script.js', function() {
-      console.log('Script loaded successfully with timestamp');
+      
+      console.log('✅ Anti-cache measures applied successfully');
     });
-
-    // Force reload function untuk debugging
-    window.forceReload = function() {
-      // Clear semua cache
-      if ('caches' in window) {
-        caches.keys().then(function(names) {
-          names.forEach(function(name) {
-            caches.delete(name);
-          });
-        });
-      }
-      // Reload dengan parameter random
-      window.location.href = window.location.href + '?t=' + new Date().getTime();
-    };
   </script>
-
-  <!-- Fallback loading jika script gagal -->
-  <noscript>
-    <script src="script.js"></script>
-  </noscript>
 </body>
 </html>
