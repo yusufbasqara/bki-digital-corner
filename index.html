@@ -11,7 +11,10 @@
   
   <title>POJOK BKI 4.0</title>
   <link rel="stylesheet" href="style.css">
+
+  
 </head>
+
 <body class="light-mode">
   <nav class="main-nav">
     <div class="nav-overlay" id="nav-overlay"></div>
@@ -79,6 +82,15 @@
     <img src="assets/barcode.png" alt="QR Code" id="barcode-image">
   </div>
 
+  <!-- PDF.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  </script>
+
+  </script>
+
   <!-- SCRIPT LOADING NORMAL (PALING AMAN) -->
   <script src="script.js"></script>
   
@@ -107,5 +119,24 @@
       console.log('✅ Anti-cache measures applied successfully');
     });
   </script>
+
+  <!-- PDF VIEWER MODAL -->
+  <div class="pdf-modal" id="pdf-modal">
+    <div class="pdf-header">
+      <h3 class="pdf-title" id="pdf-title"></h3>
+      <button class="pdf-close-btn" onclick="closePdfViewer()">
+        <span>✕ TUTUP</span>
+      </button>
+    </div>
+    <div class="pdf-viewer-container">
+      <div class="pdf-loading" id="pdf-loading">
+        <div class="spinner"></div>
+        <div class="pdf-loading-text">Memuat dokumen...</div>
+      </div>
+      <div id="pdfjs-container"></div>
+    </div>
+  </div>
+
 </body>
+
 </html>
