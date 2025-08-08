@@ -1,5 +1,5 @@
 // ========================================
-// POJOK BKI 4.0 - COMPLETE JAVASCRIPT
+// POJOK BKI 4.0 - COMPLETE JAVASCRIPT FIXED
 // ========================================
 
 // Anti-cache timestamp
@@ -363,12 +363,12 @@ const partData = {
     {
       title: 'Vol A – Petunjuk Konstruksi dan Fasilitas Pelabuhan (Guidance for Port Construction & Facilities)',
       edition: 'edisi Jan 2020',
-      link: 'assets/docs/industry/pelabuhan.pdf' 
+      link: 'assets/docs/industry/pelabuhan.pdf'
     }
   ]
 };
 
-// Mapping untuk nama bersih - TIDAK DIUBAH
+// Mapping untuk nama bersih
 const nameMapping = {
   'General': 'Part 0. General',
   'Seagoing Ship': 'Part 1. Seagoing Ship',
@@ -383,82 +383,85 @@ const nameMapping = {
   'Industry': 'Part 10. Industry'
 };
 
+// ========================================
+// MAIN APPLICATION
+// ========================================
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Log cache buster untuk debugging - DITAMBAHKAN
+  console.log('DOM Content Loaded - Initializing POJOK BKI 4.0');
   console.log('Anti-cache timestamp:', CACHE_BUSTER);
   
-  // App links configuration dengan nama bersih - TIDAK DIUBAH
-const appLinks = [
-  { 
-    name: 'General',           
-    color: 'blue',   
-    category: 'General',
-    icon: 'assets/icons/general.png' 
-  },
-  { 
-    name: 'Seagoing Ship',     
-    color: 'blue',   
-    category: 'General',
-    icon: 'assets/icons/seagoing-ship.jpg'
-  },
-  { 
-    name: 'Inland Waterway',   
-    color: 'blue',   
-    category: 'General',
-    icon: 'assets/icons/inland-waterway.webp'
-  },
-  { 
-    name: 'Special Ships',     
-    color: 'blue',   
-    category: 'General',
-    icon: 'assets/icons/special-ships.png'
-  },
-  { 
-    name: 'Special Equipment', 
-    color: 'green',  
-    category: 'Seasonal',
-    icon: 'assets/icons/special-equipment.jpg'
-  },
-  { 
-    name: 'Offshore Tech',     
-    color: 'green',  
-    category: 'Seasonal',
-    icon: 'assets/icons/offshore-tech.jpg'
-  },
-  { 
-    name: 'Statutory',         
-    color: 'green',  
-    category: 'Seasonal',
-    icon: 'assets/icons/statutory.jpg'
-  },
-  { 
-    name: 'Class Notation',    
-    color: 'green',  
-    category: 'Seasonal',
-    icon: 'assets/icons/class-notation.jpg'
-  },
-  { 
-    name: 'Domestic Ships',    
-    color: 'orange', 
-    category: 'Industry',
-    icon: 'assets/icons/domestic-ships.png'
-  },
-  { 
-    name: 'Naval Ship Tech',   
-    color: 'orange', 
-    category: 'Industry',
-    icon: 'assets/icons/naval-ship-tech.png'
-  },
-  { 
-    name: 'Industry',          
-    color: 'orange', 
-    category: 'Industry',
-    icon: 'assets/icons/industry.jpg'
-  }
-];
+  // App links configuration
+  const appLinks = [
+    { 
+      name: 'General',           
+      color: 'blue',   
+      category: 'General',
+      icon: 'assets/icons/general.png' 
+    },
+    { 
+      name: 'Seagoing Ship',     
+      color: 'blue',   
+      category: 'General',
+      icon: 'assets/icons/seagoing-ship.png'
+    },
+    { 
+      name: 'Inland Waterway',   
+      color: 'blue',   
+      category: 'General',
+      icon: 'assets/icons/inland-waterway.png'
+    },
+    { 
+      name: 'Special Ships',     
+      color: 'blue',   
+      category: 'General',
+      icon: 'assets/icons/special-ships.png'
+    },
+    { 
+      name: 'Special Equipment', 
+      color: 'green',  
+      category: 'Seasonal',
+      icon: 'assets/icons/special-equipment.png'
+    },
+    { 
+      name: 'Offshore Tech',     
+      color: 'green',  
+      category: 'Seasonal',
+      icon: 'assets/icons/offshore-tech.png'
+    },
+    { 
+      name: 'Statutory',         
+      color: 'green',  
+      category: 'Seasonal',
+      icon: 'assets/icons/statutory.png'
+    },
+    { 
+      name: 'Class Notation',    
+      color: 'green',  
+      category: 'Seasonal',
+      icon: 'assets/icons/class-notation.png'
+    },
+    { 
+      name: 'Domestic Ships',    
+      color: 'orange', 
+      category: 'Industry',
+      icon: 'assets/icons/domestic-ships.png'
+    },
+    { 
+      name: 'Naval Ship Tech',   
+      color: 'orange', 
+      category: 'Industry',
+      icon: 'assets/icons/naval-ship-tech.png'
+    },
+    { 
+      name: 'Industry',          
+      color: 'orange', 
+      category: 'Industry',
+      icon: 'assets/icons/industry.png'
+    }
+  ];
 
-
-  // Element references - TIDAK DIUBAH
+  // Element references
   const appContainer = document.getElementById('app-container');
   const themeToggle = document.getElementById('themeToggle');
   const hamburgerBtn = document.getElementById('hamburger-btn');
@@ -469,41 +472,46 @@ const appLinks = [
 
   let scrollPosition = 0;
 
-  // Function to show home page - TIDAK DIUBAH
+  // ========================================
+  // PAGE NAVIGATION FUNCTIONS
+  // ========================================
+
+  // Function to show home page
   window.showHomePage = function() {
-    console.log('Showing home page...'); // Debug log
+    console.log('Showing home page...');
     
+    // Update hash for router
+    window.location.hash = 'home';
+
     const grouped = appLinks.reduce((acc, link) => {
       (acc[link.category] = acc[link.category] || []).push(link);
       return acc;
     }, {});
 
-    console.log('Grouped data:', grouped); // Debug log
+    console.log('Grouped data:', grouped);
 
     // Clear container
     appContainer.innerHTML = '';
 
     // Create category cards
     Object.keys(grouped).forEach(cat => {
-      console.log('Creating category:', cat); // Debug log
+      console.log('Creating category:', cat);
       
       const card = document.createElement('div');
       card.className = 'category-card';
       
-      if (cat === "General") {
-        const title = document.createElement('h2');
-        title.className = 'category-title';
-        title.textContent = cat;
-        card.appendChild(title);
-      }
+      // if (cat === "General") {
+      //   const title = document.createElement('h2');
+      //   title.className = 'category-title';
+      //   title.textContent = cat;
+      //   card.appendChild(title);
+      // }
       
       const grid = document.createElement('div');
       grid.className = 'grid';
       
       grouped[cat].forEach(link => {
-        console.log('Creating icon for:', link.name); // Debug log
-        
-        const initials = link.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+        console.log('Creating icon for:', link.name);
         
         const iconItem = document.createElement('div');
         iconItem.className = 'icon-item';
@@ -521,22 +529,24 @@ const appLinks = [
 
         iconItem.appendChild(iconName);
         grid.appendChild(iconItem);
-
       });
       
       card.appendChild(grid);
       appContainer.appendChild(card);
     });
     
-    console.log('Home page created successfully'); // Debug log
-  closeMobileMenu();
-  }
+    console.log('Home page created successfully');
+    closeMobileMenu();
+  };
 
-  // Function to show part detail dengan mapping dan anti-cache - TIDAK DIUBAH LOGICNYA
+  // Function to show part detail
   window.showPartDetail = function(partName) {
-    console.log('Showing detail for:', partName); // Debug log
+    console.log('Showing detail for:', partName);
     
-    // Gunakan mapping untuk mendapatkan key yang benar
+    // Update hash for router
+    window.location.hash = 'part-' + partName.toLowerCase().replace(/ /g, '-');
+    
+    // Get data using mapping
     const mappedName = nameMapping[partName] || partName;
     const data = partData[mappedName] || [];
     
@@ -559,12 +569,142 @@ const appLinks = [
     closeMobileMenu();
   };
 
-  // Theme toggle - TIDAK DIUBAH
+  // ========================================
+  // ROUTER SYSTEM
+  // ========================================
+  
+  window.handleHashChange = function() {
+    const hash = window.location.hash.slice(1); // Remove #
+    console.log('Hash changed to:', hash);
+    
+    if (!hash || hash === '' || hash === 'home') {
+      showHomePage();
+    } else if (hash.startsWith('part-')) {
+      const partName = hash.replace('part-', '').replace(/-/g, ' ');
+      const formattedName = partName.split(' ').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      ).join(' ');
+      
+      if (Object.keys(nameMapping).includes(formattedName)) {
+        // Call showPartDetail but without updating hash again
+        const mappedName = nameMapping[formattedName] || formattedName;
+        const data = partData[mappedName] || [];
+        
+        appContainer.innerHTML = `
+          <button class="back-button" onclick="showHomePage()">
+            ← Kembali
+          </button>
+          <div class="category-card">
+            <h2 class="category-title">${formattedName}</h2>
+            <div class="rules-list">
+              ${data.map(item => `
+                <a href="javascript:void(0)" class="rule-link" onclick="openPdfModal('${item.title.replace(/'/g, "\\'")}', '${item.link}')">
+                  <div class="rule-title">${item.title}</div>
+                  ${item.edition ? `<div class="rule-edition">${item.edition}</div>` : ''}
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        closeMobileMenu();
+      } else {
+        console.log('Part not found:', formattedName);
+        window.location.hash = 'home';
+      }
+    } else {
+      window.location.hash = 'home';
+    }
+  };
+
+  // ========================================
+  // PDF MODAL FUNCTIONS
+  // ========================================
+
+  window.openPdfModal = function(title, link) {
+    console.log('Opening PDF:', title, link);
+    
+    const modal = document.getElementById('pdf-modal');
+    const loadingEl = document.getElementById('pdf-loading');
+    const container = document.getElementById('pdfjs-container');
+    const titleEl = document.getElementById('pdf-title');
+    
+    modal.classList.add('active');
+    titleEl.textContent = title;
+    document.querySelector('.main-nav').classList.add('hide-navbar');
+    
+    container.innerHTML = '';
+    loadingEl.classList.remove('hidden');
+    
+    const loadingTask = pdfjsLib.getDocument(link);
+    
+    loadingTask.promise.then(function(pdf) {
+      console.log('PDF loaded, pages:', pdf.numPages);
+      
+      function renderPage(pageNum) {
+        pdf.getPage(pageNum).then(function(page) {
+          const scale = 1.5;
+          const viewport = page.getViewport({ scale: scale });
+          
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+          };
+          
+          page.render(renderContext).promise.then(function() {
+            console.log('Page', pageNum, 'rendered');
+            
+            if (pageNum === 1) {
+              loadingEl.classList.add('hidden');
+            }
+            
+            if (pageNum < pdf.numPages) {
+              renderPage(pageNum + 1);
+            }
+          });
+          
+          container.appendChild(canvas);
+        });
+      }
+      
+      renderPage(1);
+      
+    }, function(error) {
+      console.error('Error loading PDF:', error);
+      loadingEl.classList.add('hidden');
+      container.innerHTML = `
+        <div style="color: white; text-align: center; padding: 40px;">
+          <h3>Gagal memuat dokumen</h3>
+          <p>Error: ${error.message || 'Unknown error'}</p>
+          <p>File: ${link}</p>
+        </div>
+      `;
+    });
+  };
+
+  window.closePdfViewer = function() {
+    document.getElementById('pdf-modal').classList.remove('active');
+    document.getElementById('pdfjs-container').innerHTML = '';
+    document.querySelector('.main-nav').classList.remove('hide-navbar');
+  };
+
+  // ========================================
+  // THEME & UI CONTROLS
+  // ========================================
+
+  // Theme toggle
   themeToggle.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
   });
 
-  // Mobile menu functions - TIDAK DIUBAH
+  // ========================================
+  // MOBILE MENU FUNCTIONS
+  // ========================================
+
   function openMobileMenu() {
     scrollPosition = window.pageYOffset;
     document.body.style.top = `-${scrollPosition}px`;
@@ -584,16 +724,16 @@ const appLinks = [
     mobileResourcesContent.style.display = 'none';
   }
 
-  // Toggle menu open/close - TIDAK DIUBAH
+  // Toggle menu open/close
   hamburgerBtn.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.contains('active');
     isOpen ? closeMobileMenu() : openMobileMenu();
   });
 
-  // Click overlay to close menu - TIDAK DIUBAH
+  // Click overlay to close menu
   navOverlay.addEventListener('click', closeMobileMenu);
 
-  // Toggle submenu RESOURCES - TIDAK DIUBAH
+  // Toggle submenu RESOURCES
   mobileResourcesBtn.addEventListener('click', e => {
     e.preventDefault();
     const isSubOpen = mobileResourcesContent.style.display === 'flex';
@@ -601,12 +741,10 @@ const appLinks = [
   });
 
   // ========================================
-  // TAMBAHAN SECURITY FEATURES UNTUK PDF
-  // Letakkan SETELAH mobile menu handlers
-  // dan SEBELUM Initialize homepage
+  // SECURITY FEATURES FOR PDF
   // ========================================
   
-  // Prevent right click on PDF container (anti copy)
+  // Prevent right click on PDF container
   const pdfContainer = document.getElementById('pdfjs-container');
   if (pdfContainer) {
     pdfContainer.addEventListener('contextmenu', function(e) {
@@ -625,7 +763,7 @@ const appLinks = [
         console.log('Print/Save blocked in PDF viewer');
         return false;
       }
-      // Optional: Block F12 (Developer Tools) saat PDF terbuka
+      // Optional: Block F12 (Developer Tools) when PDF is open
       if (e.key === 'F12') {
         e.preventDefault();
         console.log('DevTools blocked in PDF viewer');
@@ -634,155 +772,26 @@ const appLinks = [
     }
   });
 
-  // Initialize homepage - TIDAK DIUBAH
-  console.log('Initializing app...'); // Debug log
-  showHomePage();
-  });
-
-  // PDF Modal Function - COMPLETELY FIXED
-  window.openPdfModal = function(title, link) {
-    console.log('Opening PDF:', title, link);
-    
-    // Show modal
-    const modal = document.getElementById('pdf-modal');
-    const loadingEl = document.getElementById('pdf-loading');
-    const container = document.getElementById('pdfjs-container');
-    const titleEl = document.getElementById('pdf-title');
-    
-    modal.classList.add('active');
-    titleEl.textContent = title;
-    document.querySelector('.main-nav').classList.add('hide-navbar');
-    
-    // Clear previous content
-    container.innerHTML = '';
-    
-    // Show loading
-    loadingEl.classList.remove('hidden');
-    
-    // Load PDF
-    const loadingTask = pdfjsLib.getDocument(link);
-    
-    loadingTask.promise.then(function(pdf) {
-      console.log('PDF loaded, pages:', pdf.numPages);
-      
-      // Function to render pages sequentially
-      function renderPage(pageNum) {
-        pdf.getPage(pageNum).then(function(page) {
-          const scale = 1.5;
-          const viewport = page.getViewport({ scale: scale });
-          
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          
-          const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-          };
-          
-          page.render(renderContext).promise.then(function() {
-            console.log('Page', pageNum, 'rendered');
-            
-            // Hide loading after first page renders
-            if (pageNum === 1) {
-              loadingEl.classList.add('hidden');
-            }
-            
-            // Render next page if exists
-            if (pageNum < pdf.numPages) {
-              renderPage(pageNum + 1);
-            }
-          });
-          
-          container.appendChild(canvas);
-        });
-      }
-      
-      // Start rendering from page 1
-      renderPage(1);
-      
-    }, function(error) {
-      console.error('Error loading PDF:', error);
-      loadingEl.classList.add('hidden');
-      container.innerHTML = `
-        <div style="color: white; text-align: center; padding: 40px;">
-          <h3>Gagal memuat dokumen</h3>
-          <p>Error: ${error.message || 'Unknown error'}</p>
-          <p>File: ${link}</p>
-        </div>
-      `;
-    });
-  };
-
-  // Close PDF viewer - pastikan fungsi ini ada
-  window.closePdfViewer = function() {
-    document.getElementById('pdf-modal').classList.remove('active');
-    document.getElementById('pdfjs-container').innerHTML = '';
-    document.querySelector('.main-nav').classList.remove('hide-navbar');
-  };
-
-  // Disable klik kanan pada container
-  pdfjsContainer.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-
-  // Cegah Ctrl+S, Ctrl+P di modal aktif
-  document.addEventListener('keydown', function(e) {
-    // Prevent right click on PDF container
-    document.getElementById('pdfjs-container').addEventListener('contextmenu', e => {
-      e.preventDefault();
-      return false;
-    });
-
-    // Prevent print/save shortcuts in PDF modal
-    document.addEventListener('keydown', function(e) {
-      if (document.getElementById('pdf-modal').classList.contains('active')) {
-        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'p')) {
-          e.preventDefault();
-          return false;
-        }
-      }
-    });
-  });
-
-  // Render PDF dengan PDF.js
-  const loadingTask = pdfjsLib.getDocument(link);
-  loadingTask.promise.then(function(pdf) {
-    // Render setiap halaman PDF ke canvas
-    let pageNumber = 1;
-    function renderPage(num) {
-      pdf.getPage(num).then(function(page) {
-        var viewport = page.getViewport({ scale: 1.3 });
-        var canvas = document.createElement('canvas');
-        canvas.style.display = 'block';
-        canvas.style.margin = '0 auto 12px auto';
-        var context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        var renderContext = {
-          canvasContext: context,
-          viewport: viewport
-        };
-        page.render(renderContext).promise.then(function () {
-          if (num < pdf.numPages) {
-            renderPage(num + 1);
-          } else {
-            document.getElementById('pdf-loading').style.display = 'none';
-          }
-        });
-        pdfjsContainer.appendChild(canvas);
-      });
-    }
-    renderPage(pageNumber);
-  }, function(error) {
-    document.getElementById('pdf-loading').style.display = 'none';
-    pdfjsContainer.innerHTML = '<div style="color:red;padding:24px;text-align:center;">Gagal memuat dokumen.</div>';
-  });
-
-window.closePdfViewer = function() {
-  document.getElementById('pdf-modal').classList.remove('active');
-  document.getElementById('pdfjs-container').innerHTML = '';
-  document.querySelector('.main-nav').classList.remove('hide-navbar');
-};
-
-
+  // ========================================
+  // INITIALIZE APPLICATION WITH ROUTER
+  // ========================================
+  
+  // Listen for hash changes (back/forward button)
+  window.addEventListener('hashchange', handleHashChange);
+  
+  // Initialize app - check current hash
+  console.log('Initializing app with router...');
+  
+  // Check if there's already a hash in URL
+  if (window.location.hash && window.location.hash !== '') {
+    // If hash exists, handle it
+    handleHashChange();
+  } else {
+    // If no hash, set to home
+    window.location.hash = 'home';
+  }
+  
+  // ========================================
+  // END OF INITIALIZATION
+  // ========================================
+}); // End of DOMContentLoaded - NO CODE AFTER THIS!

@@ -562,3 +562,77 @@ body.dark-mode #barcode-image {
   }
 
 }
+
+/* ===================== */
+/* RESPONSIVE LAYAR BESAR (22 inch ke atas) */
+/* Tambahan kode oleh ChatGPT - 2025-08-07 */
+/* ===================== */
+@media screen and (min-width: 1600px) {
+  .container {
+    max-width: 1500px;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .category-card {
+    padding: 48px;
+  }
+  .grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 48px;
+  }
+  .icon-img, .icon-bg {
+    width: 120px;
+    height: 120px;
+  }
+  .icon-name {
+    font-size: 1.15rem;
+  }
+  header h1 {
+    font-size: 2.8rem;
+  }
+  .rule-link {
+    font-size: 1.2rem;
+    padding: 24px;
+  }
+  .back-button, .pdf-close-btn {
+    font-size: 1.15rem;
+    padding: 16px 32px;
+  }
+  #floating-barcode {
+    padding: 28px;
+    right: 50px;
+    bottom: 40px;
+  }
+  #barcode-image {
+    width: 170px;
+    height: 170px;
+  }
+  .rules-list {
+    gap: 18px;
+  }
+}
+
+/* ===================== */
+/* Tambahan opsional agar di layar >1920px makin lega */
+/* ===================== */
+@media screen and (min-width: 1920px) {
+  .container { max-width: 1800px; }
+  .grid { grid-template-columns: repeat(8, 1fr) !important; gap: 56px; }
+  .icon-img, .icon-bg { width: 140px; height: 140px; }
+  .icon-name { font-size: 1.22rem; }
+  .category-card { padding: 60px; }
+  .rule-link { font-size: 1.3rem; }
+}
+
+/* ===================== */
+/* Update minor untuk desktop biasa (1200px ke atas, lebih besar dikit) */
+/* ===================== */
+@media screen and (min-width: 1200px) {
+  .icon-img, .icon-bg {
+    width: 100px;
+    height: 100px;
+  }
+  .icon-name {
+    font-size: 1.05rem;
+  }
+}
